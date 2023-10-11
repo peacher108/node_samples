@@ -1,37 +1,32 @@
-//モジュール読み込み
+// expressモジュール読み込み
 const express = require('express')
-//dotenvモジュール読み込み
+// dotenvモジュール読み込み
 const dotenv = require('dotenv')
+// routerモジュール読み込み
+const routes = require('./routes')
 
-//dotenv読み込み
+// dotenvの設定読み込み
 dotenv.config()
 const HOST = process.env.HOST
 const PORT = process.env.PORT
-console.log(HOST)
-console.log(PORT)
 
-//サーバ作成
+// サーバ作成
 const app = express()
 
+// ミドルウェアの設定
+// publicフォルダを静的コンテンツのフォルダに設定
+app.use(express.static(__dirname + '/public'))
 
-//ミドルウェアの設定
-app.use(express.static(__dirname + '/public'));
+// URLエンコード
+app.use(express.urlencoded({ extended: true }))
 
-// GETリクエストの処理
-app.get('/',(req,res) => {
-    console.log(req.body)
-    console.log(req.url)
-    console.log(req.query)
-    //レスポンスの処理
-    res.send('Hello!!!!')
-})
+// ルーティングを有効
+app.use(routes)
 
-app.get('/profile',(req,res) => {
-    res.send('プロフィール!!')
-})
-//サーバ待機
-app.listen(PORT,HOST,() =>{
+//　サーバ停止: 起動中のターミナルで Ctrl + C
+// サーバ待機（Listen）
+app.listen(PORT, HOST, () => {
     console.log(HOST)
     console.log(PORT)
-    console.log('wait....')
+    console.log('wait...')
 })
