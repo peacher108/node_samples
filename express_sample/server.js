@@ -13,7 +13,11 @@ console.log(PORT)
 //サーバ作成
 const app = express()
 
-//GETリクエストの処理
+
+//ミドルウェアの設定
+app.use(express.static(__dirname + '/public'));
+
+// GETリクエストの処理
 app.get('/',(req,res) => {
     console.log(req.body)
     console.log(req.url)
@@ -22,6 +26,9 @@ app.get('/',(req,res) => {
     res.send('Hello!!!!')
 })
 
+app.get('/profile',(req,res) => {
+    res.send('プロフィール!!')
+})
 //サーバ待機
 app.listen(PORT,HOST,() =>{
     console.log(HOST)
