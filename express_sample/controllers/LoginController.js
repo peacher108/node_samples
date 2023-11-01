@@ -1,24 +1,12 @@
-// expressモジュール読み込み
-const express = require('express')
-// Routerオブジェクトを生成
-const router = express.Router()
 
-// HomeControllerモジュール読み込み
-const HomeController = require('./controllers/HomeController')
-const ItemController = require('./controllers/ItemController')
+// 入力画面（TOP)
+exports.index = (req, res) => {
+    // views/loign/index.ejs を表示
+    res.render('login/index')
+}
 
-// GETリクエストの処理
-// Home
-router.get('/', HomeController.index)
-router.get('/profile', HomeController.profile)
-
-// Item
-router.get('/item', ItemController.index)
-router.get('/item/:id', ItemController.detail)
-
-// POSTリクエスト
-router.post('/auth', (req, res) => {
-    // POSTデータ取得
+// ログイン認証
+exports.auth = (req, res) => {
     var loginName = req.body.login_name
     var password = req.body.password
     console.log(loginName, password)
@@ -36,7 +24,4 @@ router.post('/auth', (req, res) => {
         // TODO ログイン画面に戻す
     }
     res.send(message)
-})
-
-// モジュール化
-module.exports = router
+} 
